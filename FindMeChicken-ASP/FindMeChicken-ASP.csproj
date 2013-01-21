@@ -49,9 +49,6 @@
     <Reference Include="Newtonsoft.Json">
       <HintPath>..\packages\Newtonsoft.Json.4.5.11\lib\net40\Newtonsoft.Json.dll</HintPath>
     </Reference>
-    <Reference Include="RestSharp">
-      <HintPath>..\packages\RestSharp.104.1\lib\net4\RestSharp.dll</HintPath>
-    </Reference>
     <Reference Include="ServiceStack">
       <HintPath>..\packages\ServiceStack.3.9.33\lib\net35\ServiceStack.dll</HintPath>
     </Reference>
@@ -140,7 +137,6 @@
     <Compile Include="Lib\ILocationProvider.cs" />
     <Compile Include="Lib\NumberScale.cs" />
     <Compile Include="Lib\GeoCodeCalc.cs" />
-    <Compile Include="Lib\RestClientExtensions.cs" />
     <Compile Include="Lib\YQL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Sources\HungryHouse\HungryHouseSource.cs" />
