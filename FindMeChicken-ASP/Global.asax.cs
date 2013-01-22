@@ -18,7 +18,7 @@ namespace FindMeChicken_ASP
     {
         static void Main(string[] args)
         {
-            var appHost = new Global.ChickenCheckerBase();
+            var appHost = new ChickenCheckerBase();
             appHost.Init();
             DB.SetupDatabase();
             appHost.Start("http://*:8080");
@@ -27,19 +27,21 @@ namespace FindMeChicken_ASP
         }
     }
 
+    public class ChickenCheckerBase : AppHostHttpListenerBase
+    {
+        //Tell Service Stack the name of your application and where to find your web services
+        public ChickenCheckerBase() : base("ChickenChecker Web Service", typeof(FindMeChickenService).Assembly) { }
+
+        public override void Configure(Container container)
+        {
+            //register user-defined REST-ful urls
+            Routes.Add<ChickenSearchRequest>("/searchChicken").Add<ChickenMenuRequest>("/getMenu");
+        }
+    }
+
     public class Global// : System.Web.HttpApplication
     {
-        public class ChickenCheckerBase : AppHostHttpListenerBase 
-        {
-            //Tell Service Stack the name of your application and where to find your web services
-            public ChickenCheckerBase() : base("ChickenChecker Web Service", typeof(FindMeChickenService).Assembly) { }
-
-            public override void Configure(Container container)
-            {
-                //register user-defined REST-ful urls
-                Routes.Add<ChickenSearchRequest>("/searchChicken").Add<ChickenMenuRequest>("/getMenu");
-            }
-        }
+        
 
         protected void Application_Start(object sender, EventArgs e)
         {
