@@ -123,7 +123,9 @@
   <ItemGroup>
     <Content Include="Global.asax" />
     <Content Include="sqlite\x64\sqlite3.dll" />
-    <Content Include="sqlite\x86\sqlite3.dll" />
+    <Content Include="sqlite\x86\sqlite3.dll">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="sqlite\x86\sqlite3.exe" />
     <Content Include="Web.config">
       <SubType>Designer</SubType>
