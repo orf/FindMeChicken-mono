@@ -8,6 +8,7 @@ using System.Reflection;
 using ServiceStack.OrmLite;
 using ServiceStack.OrmLite.Sqlite;
 using ServiceStack.DataAnnotations;
+using ServiceStack.Logging;
 
 namespace FindMeChicken_ASP.Lib.DB
 {
@@ -19,11 +20,24 @@ namespace FindMeChicken_ASP.Lib.DB
 
         public static void SetupDatabase()
         {
+            ILog logger = LogManager.GetLogger("DB.SetuPDatabase");
+            logger.Debug("Setting up Database");
             string path = Path.GetTempFileName();
+            logger.Debug(string.Format(" - Path for Database: {0}", path));
             factory = new OrmLiteConnectionFactory(path,false, SqliteDialect.Provider);
-            using (IDbConnection db = factory.OpenDbConnection())
+            try
             {
-                db.CreateTableIfNotExists<ChickenPlace>();
+                using (IDbConnection db = factory.OpenDbConnection())
+                {
+                    logger.Debug(" - Database created");
+                    db.CreateTableIfNotExists<ChickenPlace>();
+                    logger.Debug("  - ChickenPlace table configured");
+                }
+            }
+            catch (Exception ex)
+            {
+                logger.Error(string.Format("Error creating Database: {0}", ex.Message), ex);
+                throw;
             }
         }
 
