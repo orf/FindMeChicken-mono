@@ -137,14 +137,23 @@ namespace FindMeChicken_ASP
             foreach (ISource source in SOURCES.Values)
             {
                 if (string.IsNullOrEmpty(PostCode) && source.RequiresPostcode()) continue;
+                logger.Debug(string.Format("Starting thread for source {0}", source.GetType().FullName));
                 task_list.Add(
-                        Task<List<ChickenPlace>>.Factory.StartNew(() => source.GetAvailablePlaces(new Location()
-                        {
-                            Lat = req.Lat,
-                            Long = req.Long,
-                            PostCode = PostCode,
-                            FirstPostCode = PostCode.Split(' ')[0]
-                        }))
+                        Task<List<ChickenPlace>>.Factory.StartNew(delegate() {
+                            try{
+                                return source.GetAvailablePlaces(new Location()
+                                {
+                                    Lat = req.Lat,
+                                    Long = req.Long,
+                                    PostCode = PostCode,
+                                    FirstPostCode = PostCode.Split(' ')[0]
+                                });
+                            } catch (Exception ex)
+                            {
+                                logger.Error(string.Format("Error processing places for {0}", source.GetType().FullName), ex);
+                                return new List<ChickenPlace>();
+                            };
+                        })
                     );
             }
 
