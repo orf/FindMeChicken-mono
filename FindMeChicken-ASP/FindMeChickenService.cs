@@ -62,6 +62,8 @@ namespace FindMeChicken_ASP
     public class ChickenSearchRequestResponse
     {
         public List<ChickenPlace> Result { get; set; }
+        public string PostCode { get; set; }
+        public TimeSpan TimeTaken { get; set; }
     }
 
     public class ChickenMenuRequest
@@ -116,7 +118,7 @@ namespace FindMeChicken_ASP
 
             string PostCode = req.PostCode;
             logger.Debug(string.Format("PostCode: {0}", PostCode));
-            if (string.IsNullOrEmpty(req.PostCode))
+            if (string.IsNullOrEmpty(PostCode))
             {
                 // Try each of our GeoLocation services in turn until we get a result
                 foreach (ILocationProvider provider in LocationProviders)
@@ -167,7 +169,7 @@ namespace FindMeChicken_ASP
             timer.Stop();
             logger.Debug(string.Format("Took {0} to fetch places", timer.Elapsed.ToString()));
 
-            return new ChickenSearchRequestResponse() { Result = ordered.ToList() };
+            return new ChickenSearchRequestResponse() { Result = ordered.ToList(), PostCode=PostCode, TimeTaken=timer.Elapsed };
         }
     }
 }
