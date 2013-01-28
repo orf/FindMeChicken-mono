@@ -189,7 +189,7 @@ namespace FindMeChicken_ASP.Sources.HungryHouse
                             logger.Debug(string.Format("Extracted URI: {0}", uri));
 
                             var parsed_qs = HttpUtility.ParseQueryString(uri);
-                            logger.Debug(string.Format("Parsed QS. Keys: {0}", string.Join(", ", parsed_qs.Keys)));
+                            logger.Debug(string.Format("Parsed QS. Keys: {0}", string.Join(", ", parsed_qs.Keys.GetEnumerator())));
                             var location = parsed_qs["amp;center"].Split(',');
                             logger.Debug(string.Format("Location: {0},{1}", location[0], location[1]));
                             place.Location = new Location() { Lat = float.Parse(location[0]), Long = float.Parse(location[1]) };
