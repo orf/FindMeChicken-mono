@@ -193,7 +193,7 @@ namespace FindMeChicken_ASP.Sources.HungryHouse
                             // On mono the key is "center", but on my development machine the key is amp;center. Weird.
                             string key = parsed_qs.AllKeys.Contains("center") ? "center" : "amp;center";
   
-                            var location = parsed_qs["amp;center"].Split(',');
+                            var location = parsed_qs[key].Split(',');
                             logger.Debug(string.Format("Location: {0},{1}", location[0], location[1]));
                             place.Location = new Location() { Lat = float.Parse(location[0]), Long = float.Parse(location[1]) };
                         }
