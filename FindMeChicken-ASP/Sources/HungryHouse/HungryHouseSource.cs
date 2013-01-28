@@ -75,7 +75,15 @@ namespace FindMeChicken_ASP.Sources.HungryHouse
 
                 try
                 {
-                    price = Convert.ToDecimal(item_node.SelectSingleNode(".//div[@class='menuItemPrice']").InnerText.Replace("£", string.Empty));
+                    // http://stackoverflow.com/questions/3575331/how-do-extract-decimal-number-from-string-in-c-sharp
+                    string to_extract = item_node.SelectSingleNode(".//div[@class='menuItemPrice']").InnerText;
+                    var match = Regex.Split(to_extract, @"[^0-9\.]+").Where(c => c != "." && c.Trim() != "").ToArray();
+                    if (match.Count() == 0)
+                    {
+                        logger.Error("Got 0 matches for price");
+                        continue;
+                    }
+                    price = Convert.ToDecimal(match[0]);
                 }
                 catch (FormatException ex)
                 {
