@@ -191,7 +191,7 @@ namespace FindMeChicken_ASP.Sources.HungryHouse
                             var parsed_qs = HttpUtility.ParseQueryString(uri);
                             logger.Debug(string.Format("Parsed QS. Keys: {0}", string.Join(", ", parsed_qs.AllKeys)));
                             // On mono the key is "center", but on my development machine the key is amp;center. Weird.
-                            string key = parsed_qs.AllKeys.Contains("center") ? "amp;center" : "center";
+                            string key = parsed_qs.AllKeys.Contains("center") ? "center" : "amp;center";
   
                             var location = parsed_qs["amp;center"].Split(',');
                             logger.Debug(string.Format("Location: {0},{1}", location[0], location[1]));
