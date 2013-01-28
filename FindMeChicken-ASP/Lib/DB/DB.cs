@@ -16,11 +16,11 @@ namespace FindMeChicken_ASP.Lib.DB
     {
         // Temp for now. Maybe move to something more durable later?
         static OrmLiteConnectionFactory factory;
-        
+        static ILog logger = LogManager.GetLogger("DB.SetuPDatabase");
 
         public static void SetupDatabase()
         {
-            ILog logger = LogManager.GetLogger("DB.SetuPDatabase");
+            
             logger.Debug("Setting up Database");
             string path = Path.GetTempFileName();
             logger.Debug(string.Format(" - Path for Database: {0}", path));
@@ -50,7 +50,14 @@ namespace FindMeChicken_ASP.Lib.DB
         {
             using (var conn = GetConnection())
             {
-                conn.Insert<ChickenPlace>(place);
+                try
+                {
+                    conn.Insert<ChickenPlace>(place);
+                }
+                catch (Exception ex)
+                {
+                    logger.Error("Could not insert place", ex);
+                }
             }
         }
 

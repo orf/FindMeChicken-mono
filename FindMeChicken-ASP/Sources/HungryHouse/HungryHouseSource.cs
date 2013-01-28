@@ -1,12 +1,13 @@
-﻿using System;
+﻿using HtmlAgilityPack;
+using FindMeChicken_ASP.Lib;
+using ServiceStack.Logging;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Net;
 using System.Text.RegularExpressions;
-using FindMeChicken_ASP.Sources;
-using HtmlAgilityPack;
-using ServiceStack.Logging;
+using System.Web;
+using System.IO;
 
 namespace FindMeChicken_ASP.Sources.HungryHouse
 {
@@ -36,7 +37,8 @@ namespace FindMeChicken_ASP.Sources.HungryHouse
             this.logger.Debug("Got ChickenMenu request");
             var returner = new List<ChickenMenu>();
             
-            WebClient client = new WebClient();
+            TimeoutWebClient client = new TimeoutWebClient();
+            client.SetTimeout(2);
             client.Headers[HttpRequestHeader.UserAgent] = CHROME_USER_AGENT;
             HtmlDocument doc = new HtmlDocument();
             string menu_url = string.Format(MENU_URL, id);
@@ -46,6 +48,7 @@ namespace FindMeChicken_ASP.Sources.HungryHouse
             try
             {
                 page_html = client.DownloadString(menu_url);
+                logger.Debug("Downloaded page");
             }
             catch (Exception e)
             {
@@ -131,6 +134,7 @@ namespace FindMeChicken_ASP.Sources.HungryHouse
                         logger.Error("restsRestsStatus is null");
                         continue;
                     }
+
                     if (!open_node.Attributes["class"].Value.Split(' ').Contains("restsStatusOpen")) continue;
 
                     var page_link = place_node.SelectSingleNode(".//a[@class='restPageLink']");
@@ -184,6 +188,9 @@ namespace FindMeChicken_ASP.Sources.HungryHouse
                         catch (Exception ex)
                         {
                             logger.Error("Could not extract location from URI", ex);
+                            string fpath = Path.GetTempFileName();
+                            File.WriteAllText(fpath, map_node.InnerHtml);
+                            logger.Error(string.Format("Dumped map_node to file: {0}", fpath));
                             continue;
                         }
                     }

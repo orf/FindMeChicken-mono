@@ -1,15 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Net;
-using System.Threading.Tasks;
-using System.Text;
-using System.Diagnostics;
-using System.Threading;
-using HtmlAgilityPack;
-using FindMeChicken_ASP.Lib;
+﻿using FindMeChicken_ASP.Lib;
 using FindMeChicken_ASP.Lib.DB;
+using ServiceStack.Logging;
+using HtmlAgilityPack;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
+using System.Net;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace FindMeChicken_ASP.Sources.JustEat
 {
@@ -23,6 +22,8 @@ namespace FindMeChicken_ASP.Sources.JustEat
         const string BASE_URL = HOST + "/area/{0}";
         HashSet<string> ALLOWED_CUISINES = new HashSet<string>() { "pizza", "kebabs", "american" };
 
+        ILog logger = LogManager.GetLogger(typeof(JustEatSource));
+
         public const bool SUPPORTS_MENU = true;
 
         public bool RequiresPostcode() { return true; }
@@ -31,17 +32,35 @@ namespace FindMeChicken_ASP.Sources.JustEat
 
         public List<ChickenMenu> GetPlaceMenu(string id)
         {
+            logger.Info(string.Format("Fetching place menu: {0}", id));
             var returner = new List<ChickenMenu>();
+             var page = new HtmlDocument();
 
-            var client = new WebClient();
+            var client = new TimeoutWebClient();
+            client.SetTimeout(2);
             client.Headers[HttpRequestHeader.UserAgent] = IOS_USER_AGENT;
-            var html = client.DownloadString(HOST + id);
-            var page = new HtmlDocument();
-            page.LoadHtml(html);
+            string html;
+            try
+            {
+                logger.Info(string.Format("Downloading JustEat page {0}", HOST + id));
+                page.Load(client.OpenRead(HOST + id));
+                
+                logger.Debug("Downloaded page");
+            }
+            catch (Exception ex)
+            {
+                logger.Error("Could not fetch JustEat page", ex);
+                return returner;
+            }
 
             // Loop through each category
             var product_nodes = page.DocumentNode.SelectNodes(".//li[contains(@class, 'cat')]");
-            if (product_nodes == null) return returner;
+            if (product_nodes == null)
+            {
+                logger.Error("Could not select product_nodes");
+                return returner;
+            }
+
             foreach (var node in product_nodes)
             {
                 // Check if the title contains chicken
@@ -80,7 +99,9 @@ namespace FindMeChicken_ASP.Sources.JustEat
                                 returner.Add(item);
                             }
                         }
-                        catch (Exception) { }
+                        catch (Exception ex) {
+                            logger.Error("Error parsing ChickenMenuItem", ex);
+                        }
                     }
                     // Break out of the loop if we have found our chicken header
                     break;
@@ -100,17 +121,31 @@ namespace FindMeChicken_ASP.Sources.JustEat
             List<ChickenPlace> possible_places = new List<ChickenPlace>();
             List<ChickenPlace> found_places = new List<ChickenPlace>();
 
-            var client = new WebClient();
+            var client = new TimeoutWebClient();
+            client.SetTimeout(2);
             client.Headers[HttpRequestHeader.UserAgent] = IOS_USER_AGENT;
 
             var doc = new HtmlDocument();
             string query_url = string.Format(BASE_URL, loc.FirstPostCode);
-            string just_eat_page = client.DownloadString(query_url);
+            logger.Info(string.Format("Downloading page {0}", query_url));
+            try
+            {
+                doc.Load(client.OpenRead(query_url));
+            }
+            catch (Exception ex)
+            {
+                logger.Error("Failed to download page", ex);
+                return found_places;
+            }
             
-            doc.LoadHtml(just_eat_page);
             var OpenSections = doc.GetElementbyId("OpenRestaurants");
             var OpenPlaceNodes = OpenSections.SelectNodes(".//li");
-            if (OpenPlaceNodes == null) return found_places;
+            if (OpenPlaceNodes == null)
+            {
+                logger.Info("Found no OpenPlaceNodes, returning");
+                return found_places;
+            }
+
             // Go through each takeaway and discard some based on their cuisine types.
             foreach (var TakeAway in OpenPlaceNodes)
             {
@@ -137,8 +172,6 @@ namespace FindMeChicken_ASP.Sources.JustEat
                 var cuisine_intersection = ALLOWED_CUISINES.Intersect(cuisine_list);
                 if (cuisine_intersection.Count() == 0) continue;
 
-                Debug.Print(string.Format("Thread {0} found possible place: {1} = {2}", Thread.CurrentThread.ManagedThreadId,
-                                            place.Name, string.Join(", ", cuisine_intersection)));
 
                 // Get the rating. Its a bit of a hack, but w/e
                 var rating_node = place_details.SelectSingleNode("./p[contains(@class,'rating')]");
@@ -165,7 +198,14 @@ namespace FindMeChicken_ASP.Sources.JustEat
                 // Ok. Now we have to fetch the actual menu page
                 var menu_doc = new HtmlDocument();
                 var menu_client = new WebClient();
-                menu_doc.LoadHtml(menu_client.DownloadString(HOST + place.Id));
+                try
+                {
+                    menu_doc.Load(menu_client.OpenRead(HOST + place.Id));
+                }
+                catch (Exception ex)
+                {
+                    logger.Error(string.Format("Could not download JustEat page for place {0}", place.Id), ex);
+                }
 
                 // Check if they actually serve fried chicken
                 // XPath has now lower-case function (for some insane reason), hence the use of the rather ugly translate hack.
@@ -182,9 +222,7 @@ namespace FindMeChicken_ASP.Sources.JustEat
                     return;
                 };
 
-                Debug.Print(string.Format("Thread {0} found confirmed place: {1}", Thread.CurrentThread.ManagedThreadId, place.Name));
                 
-
                 // Get the address (used for geolocating)
                 var address_node = menu_doc.DocumentNode.SelectSingleNode(".//span[@itemtype='http://schema.org/PostalAddress']");
                 var address_street = address_node.SelectSingleNode(".//span[@itemprop='streetAddress']").InnerText;

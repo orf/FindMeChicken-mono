@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
+﻿using Newtonsoft.Json;
+using System;
 using System.Net;
-using Newtonsoft.Json;
 
 namespace FindMeChicken_ASP.Lib
 {

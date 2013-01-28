@@ -1,20 +1,15 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using ServiceStack.Common;
-using ServiceStack.ServiceClient.Web;
-using ServiceStack.ServiceHost;
-using ServiceStack.ServiceInterface;
-using ServiceStack.WebHost.Endpoints;
-using ServiceStack.DataAnnotations;
-using ServiceStack.Logging;
-using System.Diagnostics;
+﻿using FindMeChicken_ASP.Lib;
 using FindMeChicken_ASP.Sources;
-using FindMeChicken_ASP.Sources.KFC;
-using FindMeChicken_ASP.Sources.JustEat;
 using FindMeChicken_ASP.Sources.HungryHouse;
-using FindMeChicken_ASP.Lib;
+using FindMeChicken_ASP.Sources.JustEat;
+using FindMeChicken_ASP.Sources.KFC;
+using ServiceStack.Logging;
+using ServiceStack.ServiceInterface;
+using System;
+using System.Collections;
+using System.Collections.Generic;
+using System.Diagnostics;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace FindMeChicken_ASP
@@ -57,6 +52,7 @@ namespace FindMeChicken_ASP
 
         // Rating from 1 to 100
         public double Rating { get; set; }
+
     }
 
     public class ChickenSearchRequestResponse
@@ -92,7 +88,16 @@ namespace FindMeChicken_ASP
             }
 
             ISource source = FindMeChickenService.SOURCES[req.SourceName];
-            var res = source.GetPlaceMenu(req.Id);
+            List<ChickenMenu> res;
+            try
+            {
+                res = source.GetPlaceMenu(req.Id);
+            }
+            catch (Exception ex)
+            {
+                logger.Error("GetPlaceMenu failed", ex);
+                res = new List<ChickenMenu>();
+            }
             return new ChickenMenuRequestResponse() { Result = res };
         }
     }
@@ -164,12 +169,17 @@ namespace FindMeChicken_ASP
             foreach (var p in places) p.Distance = Math.Round(GeoCodeCalc.CalcDistance(req.Lat, req.Long,
                                                                                        p.Location.Lat, p.Location.Long, GeoCodeCalcMeasurement.Miles), 2);
 
-            var ordered = (from place in places orderby place.Distance select place).Take(10);
+            // http://stackoverflow.com/questions/489258/linq-distinct-on-a-particular-property
+            var duplicates_excluded = places.GroupBy(p => p.Name).Select(g => g.First()).ToList();
+
+            var ordered = (from place in duplicates_excluded
+                           orderby place.Distance
+                           select place).Take(10).ToList();
 
             timer.Stop();
             logger.Debug(string.Format("Took {0} to fetch places", timer.Elapsed.ToString()));
 
-            return new ChickenSearchRequestResponse() { Result = ordered.ToList(), PostCode=PostCode, TimeTaken=timer.Elapsed };
+            return new ChickenSearchRequestResponse() { Result = ordered, PostCode=PostCode, TimeTaken=timer.Elapsed };
         }
     }
 }
