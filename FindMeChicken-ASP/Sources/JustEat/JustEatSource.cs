@@ -37,7 +37,7 @@ namespace FindMeChicken_ASP.Sources.JustEat
              var page = new HtmlDocument();
 
             var client = new TimeoutWebClient();
-            client.SetTimeout(2);
+            client.SetTimeout(4);
             client.Headers[HttpRequestHeader.UserAgent] = IOS_USER_AGENT;
             try
             {
@@ -121,7 +121,7 @@ namespace FindMeChicken_ASP.Sources.JustEat
             List<ChickenPlace> found_places = new List<ChickenPlace>();
 
             var client = new TimeoutWebClient();
-            client.SetTimeout(2);
+            client.SetTimeout(4);
             client.Headers[HttpRequestHeader.UserAgent] = IOS_USER_AGENT;
 
             var doc = new HtmlDocument();
@@ -160,7 +160,7 @@ namespace FindMeChicken_ASP.Sources.JustEat
                 var name_node = takeaway_name_base;
                 if (takeaway_name_base.SelectSingleNode("span") != null) name_node = takeaway_name_base.SelectSingleNode("span");
 
-                place.Name = RemoveUselessCharacters(takeaway_name_base.InnerText).Replace("sponsored", "");
+                place.Name = RemoveUselessCharacters(takeaway_name_base.InnerText).Replace("sponsored", string.Empty).Replace("Sponsored", string.Empty);
 
                 // Get the <div> that contains the rating and cuisine types
                 var place_details = name_link.SelectSingleNode("./div[@class='restaurantDetails']");
@@ -196,7 +196,8 @@ namespace FindMeChicken_ASP.Sources.JustEat
             {
                 // Ok. Now we have to fetch the actual menu page
                 var menu_doc = new HtmlDocument();
-                var menu_client = new WebClient();
+                var menu_client = new TimeoutWebClient();
+                //menu_client.SetTimeout(3);
                 try
                 {
                     menu_doc.Load(menu_client.OpenRead(HOST + place.Id));
@@ -204,16 +205,17 @@ namespace FindMeChicken_ASP.Sources.JustEat
                 catch (Exception ex)
                 {
                     logger.Error(string.Format("Could not download JustEat page for place {0}", place.Id), ex);
+                    return;
                 }
 
                 // Check if they actually serve fried chicken
                 // XPath has now lower-case function (for some insane reason), hence the use of the rather ugly translate hack.
-                menu_doc.DocumentNode.SelectSingleNode(@".//h2[@class='H2MC' and
+                var has_chicken = menu_doc.DocumentNode.SelectSingleNode(@".//h2[@class='H2MC' and
                                                                 contains(translate(text(),
                                                                                    'ABCDEFGHIJKLMNOPQRSTUVWXYZ',
                                                                                    'abcdefghijklmnopqrstuvwxyz'),
                                                                          'chicken')]");
-                if (menu_doc == null)
+                if (has_chicken == null)
                 {
                     // No chicken here. Create a tombstone
                     place.HasChicken = false;
@@ -224,6 +226,12 @@ namespace FindMeChicken_ASP.Sources.JustEat
                 
                 // Get the address (used for geolocating)
                 var address_node = menu_doc.DocumentNode.SelectSingleNode(".//span[@itemtype='http://schema.org/PostalAddress']");
+
+                if (address_node == null) {
+                    logger.Error(string.Format("Could not find address for {0}", place.Id));
+                    return;
+                }
+
                 var address_street = address_node.SelectSingleNode(".//span[@itemprop='streetAddress']").InnerText;
                 var address_place = address_node.SelectSingleNode(".//span[@itemprop='addressLocality']").InnerText;
                 var address_postcode = address_node.SelectSingleNode(".//span[@itemprop='postalCode']").InnerText;

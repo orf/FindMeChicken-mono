@@ -18,7 +18,7 @@ namespace FindMeChicken_ASP.Lib
         protected override WebRequest GetWebRequest(Uri address)
         {
             WebRequest w = base.GetWebRequest(address);
-            w.Timeout = this._timeout;
+            if (this._timeout > 0) w.Timeout = this._timeout;
             return w;
         }
     }

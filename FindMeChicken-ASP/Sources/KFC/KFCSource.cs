@@ -5,6 +5,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Net;
 using System.Text;
+using System.Globalization;
 
 
 namespace FindMeChicken_ASP.Sources.KFC
@@ -65,7 +66,7 @@ namespace FindMeChicken_ASP.Sources.KFC
                     {
                         Id = entry.id.Value.ToString(),
                         Source = SOURCE_NAME,
-                        Name = entry.storeName,
+                        Name = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(entry.storeName.Value.ToLower()),
                         Address = Addresses,
                         TelephoneNumber = entry.telno,
                         OpenUntil = null,
