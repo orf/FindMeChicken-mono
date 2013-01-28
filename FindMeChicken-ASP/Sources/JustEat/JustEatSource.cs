@@ -39,7 +39,6 @@ namespace FindMeChicken_ASP.Sources.JustEat
             var client = new TimeoutWebClient();
             client.SetTimeout(2);
             client.Headers[HttpRequestHeader.UserAgent] = IOS_USER_AGENT;
-            string html;
             try
             {
                 logger.Info(string.Format("Downloading JustEat page {0}", HOST + id));

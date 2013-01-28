@@ -179,10 +179,19 @@ namespace FindMeChicken_ASP.Sources.HungryHouse
                         // Get the restsMapImage and extract the style
                         try
                         {
-                            string map_style = map_node.SelectSingleNode(".//a[@class='restsMapImage']").Attributes["style"].Value;
+                            var node = map_node.SelectSingleNode(".//a[@class='restsMapImage']");
+                            logger.Debug("Found map node");
+
+                            string map_style = node.Attributes["style"].Value;
+                            logger.Debug("Got map style attribute");
+
                             string uri = UriExtractor.Match(map_style).Groups[0].Value;
+                            logger.Debug(string.Format("Extracted URI: {0}", uri));
+
                             var parsed_qs = HttpUtility.ParseQueryString(uri);
+                            logger.Debug(string.Format("Parsed QS. Keys: {0}", string.Join(", ", parsed_qs.Keys)));
                             var location = parsed_qs["amp;center"].Split(',');
+                            logger.Debug(string.Format("Location: {0},{1}", location[0], location[1]));
                             place.Location = new Location() { Lat = float.Parse(location[0]), Long = float.Parse(location[1]) };
                         }
                         catch (Exception ex)
