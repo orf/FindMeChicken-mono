@@ -5,6 +5,7 @@ using System.Web;
 using System.Web.Security;
 using System.Web.SessionState;
 using FindMeChicken_ASP.Lib.DB;
+using FindMeChicken_POCO;
 using ServiceStack.Common;
 using ServiceStack.ServiceClient.Web;
 using ServiceStack.ServiceHost;

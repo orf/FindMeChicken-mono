@@ -9,6 +9,7 @@ using ServiceStack.OrmLite;
 using ServiceStack.OrmLite.Sqlite;
 using ServiceStack.DataAnnotations;
 using ServiceStack.Logging;
+using FindMeChicken_POCO;
 
 namespace FindMeChicken_ASP.Lib.DB
 {

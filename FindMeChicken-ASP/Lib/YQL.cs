@@ -5,6 +5,7 @@ using System.IO;
 using System.Net;
 using System.Text;
 using System.Web;
+using FindMeChicken_POCO;
 
 namespace FindMeChicken_ASP.Lib
 {

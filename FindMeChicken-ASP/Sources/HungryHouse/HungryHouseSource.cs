@@ -1,5 +1,6 @@
 ﻿using HtmlAgilityPack;
 using FindMeChicken_ASP.Lib;
+using FindMeChicken_POCO;
 using ServiceStack.Logging;
 using System;
 using System.Collections.Generic;

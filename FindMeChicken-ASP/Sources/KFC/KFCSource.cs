@@ -6,7 +6,7 @@ using System.Linq;
 using System.Net;
 using System.Text;
 using System.Globalization;
-
+using FindMeChicken_POCO;
 
 namespace FindMeChicken_ASP.Sources.KFC
 {
