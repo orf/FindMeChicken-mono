@@ -10,6 +10,7 @@ using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using FindMeChicken_ASP.JustEatAPIService;
 
 namespace FindMeChicken_ASP.Sources.JustEat
 {
@@ -31,11 +32,11 @@ namespace FindMeChicken_ASP.Sources.JustEat
 
         public bool SupportsMenu() { return true; }
 
-        public List<ChickenMenu> GetPlaceMenu(string id)
+        public ChickenMenuRequestResponse GetPlaceMenu(string id)
         {
             logger.Info(string.Format("Fetching place menu: {0}", id));
             var returner = new List<ChickenMenu>();
-             var page = new HtmlDocument();
+            var page = new HtmlDocument();
 
             var client = new TimeoutWebClient();
             client.SetTimeout(4);
@@ -50,7 +51,7 @@ namespace FindMeChicken_ASP.Sources.JustEat
             catch (Exception ex)
             {
                 logger.Error("Could not fetch JustEat page", ex);
-                return returner;
+                return new ChickenMenuRequestResponse() { Result = null };
             }
 
             // Loop through each category
@@ -58,7 +59,7 @@ namespace FindMeChicken_ASP.Sources.JustEat
             if (product_nodes == null)
             {
                 logger.Error("Could not select product_nodes");
-                return returner;
+                return new ChickenMenuRequestResponse() { Result = null };
             }
 
             foreach (var node in product_nodes)
@@ -108,7 +109,7 @@ namespace FindMeChicken_ASP.Sources.JustEat
                 }
             }
 
-            return returner;
+            return new ChickenMenuRequestResponse() { Result = returner };
         }
 
         string RemoveUselessCharacters(string input)

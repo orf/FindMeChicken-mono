@@ -33,7 +33,7 @@ namespace FindMeChicken_ASP.Sources.HungryHouse
             return true;
         }
 
-        public List<ChickenMenu> GetPlaceMenu(string id)
+        public ChickenMenuRequestResponse GetPlaceMenu(string id)
         {
             this.logger.Debug("Got ChickenMenu request");
             var returner = new List<ChickenMenu>();
@@ -54,7 +54,7 @@ namespace FindMeChicken_ASP.Sources.HungryHouse
             catch (Exception e)
             {
                 logger.Error(string.Format("Could not fetch menu page: {0}", menu_url), e);
-                return returner;
+                return new ChickenMenuRequestResponse() { Result = null };
             }
 
             doc.LoadHtml(page_html);
@@ -95,7 +95,7 @@ namespace FindMeChicken_ASP.Sources.HungryHouse
                 returner.Add(new ChickenMenu() { Name = item_name, Price = price });
             }
 
-            return returner;
+            return new ChickenMenuRequestResponse() { Result = returner };
         }
 
 

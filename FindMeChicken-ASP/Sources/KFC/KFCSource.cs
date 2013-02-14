@@ -27,7 +27,7 @@ namespace FindMeChicken_ASP.Sources.KFC
             return false;
         }
 
-        public List<ChickenMenu> GetPlaceMenu(string id)
+        public ChickenMenuRequestResponse GetPlaceMenu(string id)
         {
             return null;
         }

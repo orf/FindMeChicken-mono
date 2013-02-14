@@ -130,6 +130,36 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="Global.asax" />
+    <Content Include="Service References\JustEatAPIService\configuration91.svcinfo" />
+    <Content Include="Service References\JustEatAPIService\configuration.svcinfo" />
+    <Content Include="Service References\JustEatAPIService\FindMeChicken_ASP.JustEatAPIService.ApplicationVersion.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\JustEatAPIService\FindMeChicken_ASP.JustEatAPIService.GetRestaurantResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\JustEatAPIService\FindMeChicken_ASP.JustEatAPIService.Menu.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\JustEatAPIService\FindMeChicken_ASP.JustEatAPIService.MenuHash.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\JustEatAPIService\FindMeChicken_ASP.JustEatAPIService.OrderOnlineState.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\JustEatAPIService\FindMeChicken_ASP.JustEatAPIService.Product.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\JustEatAPIService\FindMeChicken_ASP.JustEatAPIService.ProductCategory.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\JustEatAPIService\FindMeChicken_ASP.JustEatAPIService.RestaurantSearchResult.datasource">
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Content>
+    <Content Include="Service References\JustEatAPIService\Reference.svcmap">
+      <Generator>WCF Proxy Generator</Generator>
+      <LastGenOutput>Reference.cs</LastGenOutput>
+    </Content>
     <Content Include="sqlite3.dll">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </Content>
@@ -151,14 +181,42 @@
     </Compile>
     <Compile Include="Lib\YQL.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Service References\JustEatAPIService\Reference.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>Reference.svcmap</DependentUpon>
+    </Compile>
     <Compile Include="Sources\HungryHouse\HungryHouseSource.cs" />
     <Compile Include="Sources\ISource.cs" />
     <Compile Include="Lib\DB\DB.cs" />
+    <Compile Include="Sources\JustEatAPI\JustEatAPISource.cs" />
     <Compile Include="Sources\JustEat\JustEatSource.cs" />
     <Compile Include="Sources\KFC\KFCSource.cs" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="packages.config" />
+    <Content Include="Service References\JustEatAPIService\MenuApi.wsdl" />
+    <None Include="Service References\JustEatAPIService\MenuApi.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\JustEatAPIService\MenuApi1.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\JustEatAPIService\MenuApi2.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\JustEatAPIService\MenuApi3.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\JustEatAPIService\MenuApi4.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\JustEatAPIService\MenuApi5.xsd">
+      <SubType>Designer</SubType>
+    </None>
+    <None Include="Service References\JustEatAPIService\MenuApi6.xsd">
+      <SubType>Designer</SubType>
+    </None>
     <None Include="Web.Debug.config">
       <DependentUpon>Web.config</DependentUpon>
     </None>
@@ -172,6 +230,12 @@
       <Project>{bf8f7287-c103-4aa2-a4db-da44ba0fb5dd}</Project>
       <Name>FindMeChicken POCO</Name>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadata Include="Service References\" />
+  </ItemGroup>
+  <ItemGroup>
+    <WCFMetadataStorage Include="Service References\JustEatAPIService\" />
   </ItemGroup>
   <PropertyGroup>
     <VisualStudioVersion Condition="'$(VisualStudioVersion)' == ''">10.0</VisualStudioVersion>

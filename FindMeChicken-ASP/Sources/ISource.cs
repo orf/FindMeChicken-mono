@@ -11,7 +11,7 @@ namespace FindMeChicken_ASP.Sources
     public interface ISource
     {
         List<ChickenPlace> GetAvailablePlaces(Location loc);
-        List<ChickenMenu> GetPlaceMenu(string place_id);
+        ChickenMenuRequestResponse GetPlaceMenu(string place_id);
         bool RequiresPostcode();
         bool SupportsMenu();
     }

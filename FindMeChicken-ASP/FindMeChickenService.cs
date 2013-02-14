@@ -12,6 +12,8 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
+using FindMeChicken_ASP.JustEatAPIService;
+using FindMeChicken_ASP.Sources.JustEatAPI;
 
 namespace FindMeChicken_ASP
 {
@@ -32,17 +34,15 @@ namespace FindMeChicken_ASP
             }
 
             ISource source = FindMeChickenService.SOURCES[req.SourceName];
-            List<ChickenMenu> res;
             try
             {
-                res = source.GetPlaceMenu(req.Id);
+                return source.GetPlaceMenu(req.Id);
             }
             catch (Exception ex)
             {
                 logger.Error("GetPlaceMenu failed", ex);
-                res = new List<ChickenMenu>();
+               return new ChickenMenuRequestResponse() { Result = null };
             }
-            return new ChickenMenuRequestResponse() { Result = res };
         }
     }
 
@@ -51,7 +51,7 @@ namespace FindMeChicken_ASP
     {
         public static Dictionary<string, ISource> SOURCES = new Dictionary<string, ISource>() { {"KFC", new KFCSource()},
                                                                                          {"HungryHouse", new HungryHouseSource()},
-                                                                                         {"JustEat", new JustEatSource()}};
+                                                                                         {"JustEatAPI", new JustEatAPISource()}};
 
         public static ILocationProvider[] LocationProviders = new ILocationProvider[] { new YQL(), new BingMaps() };
 

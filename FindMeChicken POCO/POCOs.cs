@@ -62,5 +62,6 @@ namespace FindMeChicken_POCO
     public class ChickenMenuRequestResponse
     {
         public List<ChickenMenu> Result { get; set; }
+        public string MenuNotes { get; set; }
     }
 }

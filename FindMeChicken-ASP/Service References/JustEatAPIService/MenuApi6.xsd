@@ -1,0 +1,79 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/PublicApi.RequestData" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/PublicApi.RequestData" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:complexType name="Restaurant">
+    <xs:sequence>
+      <xs:element name="Id" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Restaurant" nillable="true" type="tns:Restaurant" />
+  <xs:complexType name="RequestContext">
+    <xs:sequence>
+      <xs:element name="CountryCode" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="LanguageCode" nillable="true" type="xs:string" />
+      <xs:element name="Password" nillable="true" type="xs:string" />
+      <xs:element name="Username" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RequestContext" nillable="true" type="tns:RequestContext" />
+  <xs:complexType name="MenuCriteria">
+    <xs:sequence>
+      <xs:element name="ForDelivery" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Formatting" nillable="true" type="xs:string" />
+      <xs:element name="LocalTime" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Postcode" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="MenuCriteria" nillable="true" type="tns:MenuCriteria" />
+  <xs:complexType name="Menu">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Formatting" nillable="true" type="xs:string" />
+      <xs:element name="Id" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Menu" nillable="true" type="tns:Menu" />
+  <xs:complexType name="ProductCategory">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Formatting" nillable="true" type="xs:string" />
+      <xs:element name="Id" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ProductCategory" nillable="true" type="tns:ProductCategory" />
+  <xs:complexType name="Product">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="Formatting" nillable="true" type="xs:string" />
+      <xs:element name="Id" type="xs:int" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="Product" nillable="true" type="tns:Product" />
+  <xs:complexType name="RestaurantSearchCriteria">
+    <xs:sequence>
+      <xs:element name="Postcode" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="RestaurantSearchCriteria" nillable="true" type="tns:RestaurantSearchCriteria" />
+  <xs:complexType name="VersionCriteria">
+    <xs:sequence>
+      <xs:element name="Application" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+      <xs:element name="Version" nillable="true" type="xs:string">
+        <xs:annotation>
+          <xs:appinfo>
+            <DefaultValue EmitDefaultValue="false" xmlns="http://schemas.microsoft.com/2003/10/Serialization/" />
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:element>
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="VersionCriteria" nillable="true" type="tns:VersionCriteria" />
+</xs:schema>

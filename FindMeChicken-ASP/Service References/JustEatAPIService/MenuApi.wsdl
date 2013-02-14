@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://api.just-eat.com/MenuApi.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://api.just-eat.com/MenuApi.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/PublicApi.FaultData" />
+      <xsd:import schemaLocation="http://api.just-eat.com/MenuApi.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://api.just-eat.com/MenuApi.svc?xsd=xsd2" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xsd:import schemaLocation="http://api.just-eat.com/MenuApi.svc?xsd=xsd4" namespace="http://schemas.datacontract.org/2004/07/PublicApi.RequestData" />
+      <xsd:import schemaLocation="http://api.just-eat.com/MenuApi.svc?xsd=xsd5" namespace="http://schemas.datacontract.org/2004/07/JustEat.Core.Model" />
+      <xsd:import schemaLocation="http://api.just-eat.com/MenuApi.svc?xsd=xsd6" namespace="http://schemas.datacontract.org/2004/07/System" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IMenuApi_GetAllConfiguredCountryCodes_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllConfiguredCountryCodes" />
+  </wsdl:message>
+  <wsdl:message name="IMenuApi_GetAllConfiguredCountryCodes_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAllConfiguredCountryCodesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMenuApi_GetAllConfiguredCountryCodes_AuthorisationFaultFault_FaultMessage">
+    <wsdl:part xmlns:q1="http://schemas.datacontract.org/2004/07/PublicApi.FaultData" name="detail" element="q1:AuthorisationFault" />
+  </wsdl:message>
+  <wsdl:message name="IMenuApi_GetAllConfiguredCountryCodes_CountryNotConfiguredFaultFault_FaultMessage">
+    <wsdl:part xmlns:q2="http://schemas.datacontract.org/2004/07/PublicApi.FaultData" name="detail" element="q2:CountryNotConfiguredFault" />
+  </wsdl:message>
+  <wsdl:message name="IMenuApi_GetMenus_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetMenus" />
+  </wsdl:message>
+  <wsdl:message name="IMenuApi_GetMenus_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetMenusResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMenuApi_GetMenus_CountryNotConfiguredFaultFault_FaultMessage">
+    <wsdl:part xmlns:q3="http://schemas.datacontract.org/2004/07/PublicApi.FaultData" name="detail" element="q3:CountryNotConfiguredFault" />
+  </wsdl:message>
+  <wsdl:message name="IMenuApi_GetMenus_AuthorisationFaultFault_FaultMessage">
+    <wsdl:part xmlns:q4="http://schemas.datacontract.org/2004/07/PublicApi.FaultData" name="detail" element="q4:AuthorisationFault" />
+  </wsdl:message>
+  <wsdl:message name="IMenuApi_GetCurrentMenu_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCurrentMenu" />
+  </wsdl:message>
+  <wsdl:message name="IMenuApi_GetCurrentMenu_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCurrentMenuResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMenuApi_GetCurrentMenu_CountryNotConfiguredFaultFault_FaultMessage">
+    <wsdl:part xmlns:q5="http://schemas.datacontract.org/2004/07/PublicApi.FaultData" name="detail" element="q5:CountryNotConfiguredFault" />
+  </wsdl:message>
+  <wsdl:message name="IMenuApi_GetCurrentMenu_AuthorisationFaultFault_FaultMessage">
+    <wsdl:part xmlns:q6="http://schemas.datacontract.org/2004/07/PublicApi.FaultData" name="detail" element="q6:AuthorisationFault" />
+  </wsdl:message>
+  <wsdl:message name="IMenuApi_GetMenuHash_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetMenuHash" />
+  </wsdl:message>
+  <wsdl:message name="IMenuApi_GetMenuHash_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetMenuHashResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMenuApi_GetMenuHash_CountryNotConfiguredFaultFault_FaultMessage">
+    <wsdl:part xmlns:q7="http://schemas.datacontract.org/2004/07/PublicApi.FaultData" name="detail" element="q7:CountryNotConfiguredFault" />
+  </wsdl:message>
+  <wsdl:message name="IMenuApi_GetMenuHash_AuthorisationFaultFault_FaultMessage">
+    <wsdl:part xmlns:q8="http://schemas.datacontract.org/2004/07/PublicApi.FaultData" name="detail" element="q8:AuthorisationFault" />
+  </wsdl:message>
+  <wsdl:message name="IMenuApi_GetCategoriesForMenu_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetCategoriesForMenu" />
+  </wsdl:message>
+  <wsdl:message name="IMenuApi_GetCategoriesForMenu_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetCategoriesForMenuResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMenuApi_GetCategoriesForMenu_AuthorisationFaultFault_FaultMessage">
+    <wsdl:part xmlns:q9="http://schemas.datacontract.org/2004/07/PublicApi.FaultData" name="detail" element="q9:AuthorisationFault" />
+  </wsdl:message>
+  <wsdl:message name="IMenuApi_GetCategoriesForMenu_CountryNotConfiguredFaultFault_FaultMessage">
+    <wsdl:part xmlns:q10="http://schemas.datacontract.org/2004/07/PublicApi.FaultData" name="detail" element="q10:CountryNotConfiguredFault" />
+  </wsdl:message>
+  <wsdl:message name="IMenuApi_GetProducts_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetProducts" />
+  </wsdl:message>
+  <wsdl:message name="IMenuApi_GetProducts_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetProductsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMenuApi_GetProducts_CountryNotConfiguredFaultFault_FaultMessage">
+    <wsdl:part xmlns:q11="http://schemas.datacontract.org/2004/07/PublicApi.FaultData" name="detail" element="q11:CountryNotConfiguredFault" />
+  </wsdl:message>
+  <wsdl:message name="IMenuApi_GetProducts_AuthorisationFaultFault_FaultMessage">
+    <wsdl:part xmlns:q12="http://schemas.datacontract.org/2004/07/PublicApi.FaultData" name="detail" element="q12:AuthorisationFault" />
+  </wsdl:message>
+  <wsdl:message name="IMenuApi_GetProductDetails_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetProductDetails" />
+  </wsdl:message>
+  <wsdl:message name="IMenuApi_GetProductDetails_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetProductDetailsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMenuApi_GetProductDetails_AuthorisationFaultFault_FaultMessage">
+    <wsdl:part xmlns:q13="http://schemas.datacontract.org/2004/07/PublicApi.FaultData" name="detail" element="q13:AuthorisationFault" />
+  </wsdl:message>
+  <wsdl:message name="IMenuApi_GetProductDetails_CountryNotConfiguredFaultFault_FaultMessage">
+    <wsdl:part xmlns:q14="http://schemas.datacontract.org/2004/07/PublicApi.FaultData" name="detail" element="q14:CountryNotConfiguredFault" />
+  </wsdl:message>
+  <wsdl:message name="IMenuApi_GetRestaurants_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetRestaurants" />
+  </wsdl:message>
+  <wsdl:message name="IMenuApi_GetRestaurants_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetRestaurantsResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMenuApi_GetRestaurants_CountryNotConfiguredFaultFault_FaultMessage">
+    <wsdl:part xmlns:q15="http://schemas.datacontract.org/2004/07/PublicApi.FaultData" name="detail" element="q15:CountryNotConfiguredFault" />
+  </wsdl:message>
+  <wsdl:message name="IMenuApi_GetRestaurants_LanguageNotConfiguredFaultFault_FaultMessage">
+    <wsdl:part xmlns:q16="http://schemas.datacontract.org/2004/07/PublicApi.FaultData" name="detail" element="q16:LanguageNotConfiguredFault" />
+  </wsdl:message>
+  <wsdl:message name="IMenuApi_GetRestaurants_AuthorisationFaultFault_FaultMessage">
+    <wsdl:part xmlns:q17="http://schemas.datacontract.org/2004/07/PublicApi.FaultData" name="detail" element="q17:AuthorisationFault" />
+  </wsdl:message>
+  <wsdl:message name="IMenuApi_GetRestaurantsV2_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetRestaurantsV2" />
+  </wsdl:message>
+  <wsdl:message name="IMenuApi_GetRestaurantsV2_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetRestaurantsV2Response" />
+  </wsdl:message>
+  <wsdl:message name="IMenuApi_GetRestaurantsV2_LanguageNotConfiguredFaultFault_FaultMessage">
+    <wsdl:part xmlns:q18="http://schemas.datacontract.org/2004/07/PublicApi.FaultData" name="detail" element="q18:LanguageNotConfiguredFault" />
+  </wsdl:message>
+  <wsdl:message name="IMenuApi_GetRestaurantsV2_CountryNotConfiguredFaultFault_FaultMessage">
+    <wsdl:part xmlns:q19="http://schemas.datacontract.org/2004/07/PublicApi.FaultData" name="detail" element="q19:CountryNotConfiguredFault" />
+  </wsdl:message>
+  <wsdl:message name="IMenuApi_GetRestaurantsV2_AuthorisationFaultFault_FaultMessage">
+    <wsdl:part xmlns:q20="http://schemas.datacontract.org/2004/07/PublicApi.FaultData" name="detail" element="q20:AuthorisationFault" />
+  </wsdl:message>
+  <wsdl:message name="IMenuApi_GetApplicationVersion_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetApplicationVersion" />
+  </wsdl:message>
+  <wsdl:message name="IMenuApi_GetApplicationVersion_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetApplicationVersionResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMenuApi_GetApplicationVersion_AuthorisationFaultFault_FaultMessage">
+    <wsdl:part xmlns:q21="http://schemas.datacontract.org/2004/07/PublicApi.FaultData" name="detail" element="q21:AuthorisationFault" />
+  </wsdl:message>
+  <wsdl:message name="IMenuApi_GetApplicationVersion_CountryNotConfiguredFaultFault_FaultMessage">
+    <wsdl:part xmlns:q22="http://schemas.datacontract.org/2004/07/PublicApi.FaultData" name="detail" element="q22:CountryNotConfiguredFault" />
+  </wsdl:message>
+  <wsdl:message name="IMenuApi_GetOrderOnlineState_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetOrderOnlineState" />
+  </wsdl:message>
+  <wsdl:message name="IMenuApi_GetOrderOnlineState_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetOrderOnlineStateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IMenuApi_GetOrderOnlineState_CountryNotConfiguredFaultFault_FaultMessage">
+    <wsdl:part xmlns:q23="http://schemas.datacontract.org/2004/07/PublicApi.FaultData" name="detail" element="q23:CountryNotConfiguredFault" />
+  </wsdl:message>
+  <wsdl:message name="IMenuApi_GetOrderOnlineState_AuthorisationFaultFault_FaultMessage">
+    <wsdl:part xmlns:q24="http://schemas.datacontract.org/2004/07/PublicApi.FaultData" name="detail" element="q24:AuthorisationFault" />
+  </wsdl:message>
+  <wsdl:portType name="IMenuApi">
+    <wsdl:operation name="GetAllConfiguredCountryCodes">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMenuApi/GetAllConfiguredCountryCodes" message="tns:IMenuApi_GetAllConfiguredCountryCodes_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMenuApi/GetAllConfiguredCountryCodesResponse" message="tns:IMenuApi_GetAllConfiguredCountryCodes_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IMenuApi/GetAllConfiguredCountryCodesAuthorisationFaultFault" name="AuthorisationFaultFault" message="tns:IMenuApi_GetAllConfiguredCountryCodes_AuthorisationFaultFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IMenuApi/GetAllConfiguredCountryCodesCountryNotConfiguredFaultFault" name="CountryNotConfiguredFaultFault" message="tns:IMenuApi_GetAllConfiguredCountryCodes_CountryNotConfiguredFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMenus">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMenuApi/GetMenus" message="tns:IMenuApi_GetMenus_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMenuApi/GetMenusResponse" message="tns:IMenuApi_GetMenus_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IMenuApi/GetMenusCountryNotConfiguredFaultFault" name="CountryNotConfiguredFaultFault" message="tns:IMenuApi_GetMenus_CountryNotConfiguredFaultFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IMenuApi/GetMenusAuthorisationFaultFault" name="AuthorisationFaultFault" message="tns:IMenuApi_GetMenus_AuthorisationFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCurrentMenu">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMenuApi/GetCurrentMenu" message="tns:IMenuApi_GetCurrentMenu_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMenuApi/GetCurrentMenuResponse" message="tns:IMenuApi_GetCurrentMenu_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IMenuApi/GetCurrentMenuCountryNotConfiguredFaultFault" name="CountryNotConfiguredFaultFault" message="tns:IMenuApi_GetCurrentMenu_CountryNotConfiguredFaultFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IMenuApi/GetCurrentMenuAuthorisationFaultFault" name="AuthorisationFaultFault" message="tns:IMenuApi_GetCurrentMenu_AuthorisationFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetMenuHash">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMenuApi/GetMenuHash" message="tns:IMenuApi_GetMenuHash_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMenuApi/GetMenuHashResponse" message="tns:IMenuApi_GetMenuHash_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IMenuApi/GetMenuHashCountryNotConfiguredFaultFault" name="CountryNotConfiguredFaultFault" message="tns:IMenuApi_GetMenuHash_CountryNotConfiguredFaultFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IMenuApi/GetMenuHashAuthorisationFaultFault" name="AuthorisationFaultFault" message="tns:IMenuApi_GetMenuHash_AuthorisationFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetCategoriesForMenu">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMenuApi/GetCategoriesForMenu" message="tns:IMenuApi_GetCategoriesForMenu_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMenuApi/GetCategoriesForMenuResponse" message="tns:IMenuApi_GetCategoriesForMenu_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IMenuApi/GetCategoriesForMenuAuthorisationFaultFault" name="AuthorisationFaultFault" message="tns:IMenuApi_GetCategoriesForMenu_AuthorisationFaultFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IMenuApi/GetCategoriesForMenuCountryNotConfiguredFaultFault" name="CountryNotConfiguredFaultFault" message="tns:IMenuApi_GetCategoriesForMenu_CountryNotConfiguredFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetProducts">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMenuApi/GetProducts" message="tns:IMenuApi_GetProducts_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMenuApi/GetProductsResponse" message="tns:IMenuApi_GetProducts_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IMenuApi/GetProductsCountryNotConfiguredFaultFault" name="CountryNotConfiguredFaultFault" message="tns:IMenuApi_GetProducts_CountryNotConfiguredFaultFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IMenuApi/GetProductsAuthorisationFaultFault" name="AuthorisationFaultFault" message="tns:IMenuApi_GetProducts_AuthorisationFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetProductDetails">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMenuApi/GetProductDetails" message="tns:IMenuApi_GetProductDetails_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMenuApi/GetProductDetailsResponse" message="tns:IMenuApi_GetProductDetails_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IMenuApi/GetProductDetailsAuthorisationFaultFault" name="AuthorisationFaultFault" message="tns:IMenuApi_GetProductDetails_AuthorisationFaultFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IMenuApi/GetProductDetailsCountryNotConfiguredFaultFault" name="CountryNotConfiguredFaultFault" message="tns:IMenuApi_GetProductDetails_CountryNotConfiguredFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetRestaurants">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMenuApi/GetRestaurants" message="tns:IMenuApi_GetRestaurants_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMenuApi/GetRestaurantsResponse" message="tns:IMenuApi_GetRestaurants_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IMenuApi/GetRestaurantsCountryNotConfiguredFaultFault" name="CountryNotConfiguredFaultFault" message="tns:IMenuApi_GetRestaurants_CountryNotConfiguredFaultFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IMenuApi/GetRestaurantsLanguageNotConfiguredFaultFault" name="LanguageNotConfiguredFaultFault" message="tns:IMenuApi_GetRestaurants_LanguageNotConfiguredFaultFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IMenuApi/GetRestaurantsAuthorisationFaultFault" name="AuthorisationFaultFault" message="tns:IMenuApi_GetRestaurants_AuthorisationFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetRestaurantsV2">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMenuApi/GetRestaurantsV2" message="tns:IMenuApi_GetRestaurantsV2_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMenuApi/GetRestaurantsV2Response" message="tns:IMenuApi_GetRestaurantsV2_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IMenuApi/GetRestaurantsV2LanguageNotConfiguredFaultFault" name="LanguageNotConfiguredFaultFault" message="tns:IMenuApi_GetRestaurantsV2_LanguageNotConfiguredFaultFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IMenuApi/GetRestaurantsV2CountryNotConfiguredFaultFault" name="CountryNotConfiguredFaultFault" message="tns:IMenuApi_GetRestaurantsV2_CountryNotConfiguredFaultFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IMenuApi/GetRestaurantsV2AuthorisationFaultFault" name="AuthorisationFaultFault" message="tns:IMenuApi_GetRestaurantsV2_AuthorisationFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetApplicationVersion">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMenuApi/GetApplicationVersion" message="tns:IMenuApi_GetApplicationVersion_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMenuApi/GetApplicationVersionResponse" message="tns:IMenuApi_GetApplicationVersion_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IMenuApi/GetApplicationVersionAuthorisationFaultFault" name="AuthorisationFaultFault" message="tns:IMenuApi_GetApplicationVersion_AuthorisationFaultFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IMenuApi/GetApplicationVersionCountryNotConfiguredFaultFault" name="CountryNotConfiguredFaultFault" message="tns:IMenuApi_GetApplicationVersion_CountryNotConfiguredFaultFault_FaultMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetOrderOnlineState">
+      <wsdl:input wsaw:Action="http://tempuri.org/IMenuApi/GetOrderOnlineState" message="tns:IMenuApi_GetOrderOnlineState_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IMenuApi/GetOrderOnlineStateResponse" message="tns:IMenuApi_GetOrderOnlineState_OutputMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IMenuApi/GetOrderOnlineStateCountryNotConfiguredFaultFault" name="CountryNotConfiguredFaultFault" message="tns:IMenuApi_GetOrderOnlineState_CountryNotConfiguredFaultFault_FaultMessage" />
+      <wsdl:fault wsaw:Action="http://tempuri.org/IMenuApi/GetOrderOnlineStateAuthorisationFaultFault" name="AuthorisationFaultFault" message="tns:IMenuApi_GetOrderOnlineState_AuthorisationFaultFault_FaultMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IMenuApi" type="tns:IMenuApi">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetAllConfiguredCountryCodes">
+      <soap:operation soapAction="http://tempuri.org/IMenuApi/GetAllConfiguredCountryCodes" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="AuthorisationFaultFault">
+        <soap:fault use="literal" name="AuthorisationFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="CountryNotConfiguredFaultFault">
+        <soap:fault use="literal" name="CountryNotConfiguredFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetMenus">
+      <soap:operation soapAction="http://tempuri.org/IMenuApi/GetMenus" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="CountryNotConfiguredFaultFault">
+        <soap:fault use="literal" name="CountryNotConfiguredFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="AuthorisationFaultFault">
+        <soap:fault use="literal" name="AuthorisationFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetCurrentMenu">
+      <soap:operation soapAction="http://tempuri.org/IMenuApi/GetCurrentMenu" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="CountryNotConfiguredFaultFault">
+        <soap:fault use="literal" name="CountryNotConfiguredFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="AuthorisationFaultFault">
+        <soap:fault use="literal" name="AuthorisationFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetMenuHash">
+      <soap:operation soapAction="http://tempuri.org/IMenuApi/GetMenuHash" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="CountryNotConfiguredFaultFault">
+        <soap:fault use="literal" name="CountryNotConfiguredFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="AuthorisationFaultFault">
+        <soap:fault use="literal" name="AuthorisationFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetCategoriesForMenu">
+      <soap:operation soapAction="http://tempuri.org/IMenuApi/GetCategoriesForMenu" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="AuthorisationFaultFault">
+        <soap:fault use="literal" name="AuthorisationFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="CountryNotConfiguredFaultFault">
+        <soap:fault use="literal" name="CountryNotConfiguredFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetProducts">
+      <soap:operation soapAction="http://tempuri.org/IMenuApi/GetProducts" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="CountryNotConfiguredFaultFault">
+        <soap:fault use="literal" name="CountryNotConfiguredFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="AuthorisationFaultFault">
+        <soap:fault use="literal" name="AuthorisationFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetProductDetails">
+      <soap:operation soapAction="http://tempuri.org/IMenuApi/GetProductDetails" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="AuthorisationFaultFault">
+        <soap:fault use="literal" name="AuthorisationFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="CountryNotConfiguredFaultFault">
+        <soap:fault use="literal" name="CountryNotConfiguredFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetRestaurants">
+      <soap:operation soapAction="http://tempuri.org/IMenuApi/GetRestaurants" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="CountryNotConfiguredFaultFault">
+        <soap:fault use="literal" name="CountryNotConfiguredFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="LanguageNotConfiguredFaultFault">
+        <soap:fault use="literal" name="LanguageNotConfiguredFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="AuthorisationFaultFault">
+        <soap:fault use="literal" name="AuthorisationFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetRestaurantsV2">
+      <soap:operation soapAction="http://tempuri.org/IMenuApi/GetRestaurantsV2" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="LanguageNotConfiguredFaultFault">
+        <soap:fault use="literal" name="LanguageNotConfiguredFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="CountryNotConfiguredFaultFault">
+        <soap:fault use="literal" name="CountryNotConfiguredFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="AuthorisationFaultFault">
+        <soap:fault use="literal" name="AuthorisationFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetApplicationVersion">
+      <soap:operation soapAction="http://tempuri.org/IMenuApi/GetApplicationVersion" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="AuthorisationFaultFault">
+        <soap:fault use="literal" name="AuthorisationFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="CountryNotConfiguredFaultFault">
+        <soap:fault use="literal" name="CountryNotConfiguredFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+    <wsdl:operation name="GetOrderOnlineState">
+      <soap:operation soapAction="http://tempuri.org/IMenuApi/GetOrderOnlineState" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+      <wsdl:fault name="CountryNotConfiguredFaultFault">
+        <soap:fault use="literal" name="CountryNotConfiguredFaultFault" namespace="" />
+      </wsdl:fault>
+      <wsdl:fault name="AuthorisationFaultFault">
+        <soap:fault use="literal" name="AuthorisationFaultFault" namespace="" />
+      </wsdl:fault>
+    </wsdl:operation>
+  </wsdl:binding>
+</wsdl:definitions>
