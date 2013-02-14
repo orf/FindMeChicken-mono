@@ -12,7 +12,6 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
 using System.Threading.Tasks;
-using FindMeChicken_ASP.JustEatAPIService;
 using FindMeChicken_ASP.Sources.JustEatAPI;
 
 namespace FindMeChicken_ASP

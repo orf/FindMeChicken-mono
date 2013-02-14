@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
-using FindMeChicken_ASP.JustEatAPIService;
 using FindMeChicken_ASP;
 using FindMeChicken_ASP.Lib;
 using FindMeChicken_ASP.Sources;
@@ -28,7 +27,7 @@ namespace FindMeChicken_ASP.Sources.JustEatAPI
             };
         }
 
-        int GetPlaceCurrentMenuId(MenuApiClient client, int place_id, string first_postcode)
+        int GetPlaceCurrentMenuId(BasicHttpBinding_IMenuApi client, int place_id, string first_postcode)
         {
             return client.GetCurrentMenu(new Restaurant() { Id=place_id}, new MenuCriteria() { Postcode=first_postcode,
                                                                                                LocalTime=DateTime.Now.ToString("o"),
@@ -36,12 +35,17 @@ namespace FindMeChicken_ASP.Sources.JustEatAPI
                                                                                                Formatting="SafeHtml" }, GetRequestContext()).Id;
         }
 
+        BasicHttpBinding_IMenuApi GetClient()
+        {
+            return new BasicHttpBinding_IMenuApi() { Url = "http://api.just-eat.com/MenuApi.svc" };
+        }
+
         public List<ChickenPlace> GetAvailablePlaces(Location loc)
         {
             List<ChickenPlace> returner = new List<ChickenPlace>();
             List<RestaurantSearchResult> possible_places = new List<RestaurantSearchResult>();
 
-            var client = new MenuApiClient();
+            var client = GetClient();
             var search_criteria = new RestaurantSearchCriteria();
             search_criteria.Postcode = loc.FirstPostCode;
             var request_context = GetRequestContext();
@@ -87,7 +91,7 @@ namespace FindMeChicken_ASP.Sources.JustEatAPI
         {
             
             int place_id_int = Convert.ToInt32(place_id);
-            var client = new MenuApiClient();
+            var client = GetClient();
             var req_context = GetRequestContext();
 
             var menu_id = GetPlaceCurrentMenuId(client, place_id_int, null);

@@ -189,21 +189,21 @@ namespace FindMeChicken_ASP.Sources.HungryHouse
                         try
                         {
                             var node = map_node.SelectSingleNode(".//a[@class='restsMapImage']");
-                            logger.Debug("Found map node");
+                            //logger.Debug("Found map node");
 
                             string map_style = node.Attributes["style"].Value;
-                            logger.Debug("Got map style attribute");
+                            //logger.Debug("Got map style attribute");
 
                             string uri = UriExtractor.Match(map_style).Groups[0].Value;
-                            logger.Debug(string.Format("Extracted URI: {0}", uri));
+                            //logger.Debug(string.Format("Extracted URI: {0}", uri));
 
                             var parsed_qs = HttpUtility.ParseQueryString(uri);
-                            logger.Debug(string.Format("Parsed QS. Keys: {0}", string.Join(", ", parsed_qs.AllKeys)));
+                            //logger.Debug(string.Format("Parsed QS. Keys: {0}", string.Join(", ", parsed_qs.AllKeys)));
                             // On mono the key is "center", but on my development machine the key is amp;center. Weird.
                             string key = parsed_qs.AllKeys.Contains("center") ? "center" : "amp;center";
   
                             var location = parsed_qs[key].Split(',');
-                            logger.Debug(string.Format("Location: {0},{1}", location[0], location[1]));
+                            //logger.Debug(string.Format("Location: {0},{1}", location[0], location[1]));
                             place.Location = new Location() { Lat = float.Parse(location[0]), Long = float.Parse(location[1]) };
                         }
                         catch (Exception ex)

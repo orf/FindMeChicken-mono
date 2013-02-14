@@ -10,7 +10,6 @@ using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
-using FindMeChicken_ASP.JustEatAPIService;
 
 namespace FindMeChicken_ASP.Sources.JustEat
 {
