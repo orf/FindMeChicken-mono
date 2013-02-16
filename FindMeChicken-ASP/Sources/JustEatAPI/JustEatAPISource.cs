@@ -61,7 +61,7 @@ namespace FindMeChicken_ASP.Sources.JustEatAPI
              * then check if they have a menu category that contains the word "chicken". If they do then we create a 
              * new ChickenPlace for the restaurant, ready to be GeoLocated and sent back to the client.
              */
-            var places = from place in client.GetRestaurantsV2(search_criteria, request_context).Restaurants.AsParallel()
+            var places = (from place in client.GetRestaurantsV2(search_criteria, request_context).Restaurants.AsParallel()
                          where
                             place.IsOpenNow
                             // Does it serve one of our allowed cuisines?
@@ -88,7 +88,7 @@ namespace FindMeChicken_ASP.Sources.JustEatAPI
                                         HasChicken = true,
                                         Rating = NumberScale.ScaleNumber(Convert.ToInt32(place.RatingForDisplay),0,6,0,100),
                                         TelephoneNumber = null
-                                    };
+                                    }).ToArray();
             logger.Debug("LINQ over");
             returner.AddRange(places);
             YQL.GeoLocatePlaces(ref returner);
