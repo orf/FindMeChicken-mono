@@ -8,11 +8,13 @@ using FindMeChicken_ASP.Sources;
 using FindMeChicken_POCO;
 using System.Threading;
 using System.Threading.Tasks;
+using ServiceStack.Logging;
 
 namespace FindMeChicken_ASP.Sources.JustEatAPI
 {
     public class JustEatAPISource : ISource
     {
+        ILog logger = LogManager.GetLogger(typeof(JustEatAPISource));
         HashSet<string> ALLOWED_CUISINES = new HashSet<string>() { "pizza", "kebabs", "american" };
         string SOURCE_NAME = "JustEatAPI";
 
@@ -29,10 +31,13 @@ namespace FindMeChicken_ASP.Sources.JustEatAPI
 
         int GetPlaceCurrentMenuId(BasicHttpBinding_IMenuApi client, int place_id, string first_postcode)
         {
-            return client.GetCurrentMenu(new Restaurant() { Id=place_id}, new MenuCriteria() { Postcode=first_postcode,
+            logger.Debug(string.Format("GetPlaceCurrentMenuId started by thread {0}", Thread.CurrentThread.ManagedThreadId));
+            var ret = client.GetCurrentMenu(new Restaurant() { Id=place_id}, new MenuCriteria() { Postcode=first_postcode,
                                                                                                LocalTime=DateTime.Now.ToString("o"),
                                                                                                ForDelivery=true,
                                                                                                Formatting="SafeHtml" }, GetRequestContext()).Id;
+            logger.Debug(string.Format("GetPlaceCurrentMenuId finished by thread {0}", Thread.CurrentThread.ManagedThreadId));
+            return ret;
         }
 
         BasicHttpBinding_IMenuApi GetClient()
@@ -50,6 +55,7 @@ namespace FindMeChicken_ASP.Sources.JustEatAPI
             search_criteria.Postcode = loc.FirstPostCode;
             var request_context = GetRequestContext();
 
+            logger.Debug("Starting LINQ");
             /* Woah this is a big (parallel) LINQ statement. Don't be afraid.
              * We simply take all the restaurants open, check that they serve any cuisine in ALLOWED_CUISINES,
              * then check if they have a menu category that contains the word "chicken". If they do then we create a 
@@ -63,7 +69,10 @@ namespace FindMeChicken_ASP.Sources.JustEatAPI
                                                          in place.CuisineTypes
                                                          select cname.Name.ToLower()).Count() != 0
                             // Does it have a Chicken category?
-                            && (from menu_item in client.GetCategoriesForMenu(new Menu1() { Id = GetPlaceCurrentMenuId(client, place.Id, loc.FirstPostCode) },
+                            && (from menu_item
+                                in client.GetCategoriesForMenu(new Menu1() { Id = GetPlaceCurrentMenuId(client,
+                                                                                                        place.Id,
+                                                                                                        loc.FirstPostCode) },
                                                                               request_context)
                                 where menu_item.Name.ToLower().Contains("chicken")
                                 select menu_item).Count() != 0
@@ -77,34 +86,34 @@ namespace FindMeChicken_ASP.Sources.JustEatAPI
                                         MenuAvaiable = true,
                                         Location = null, // Will be filled in later.
                                         HasChicken = true,
-                                        Rating = place.RatingForDisplay,
+                                        Rating = NumberScale.ScaleNumber(Convert.ToInt32(place.RatingForDisplay),0,6,0,100),
                                         TelephoneNumber = null
                                     };
-
+            logger.Debug("LINQ over");
             returner.AddRange(places);
             YQL.GeoLocatePlaces(ref returner);
-
+            logger.Debug("Geolocation complete, returning");
             return returner;
         }
 
         public ChickenMenuRequestResponse GetPlaceMenu(string place_id)
         {
-            
             int place_id_int = Convert.ToInt32(place_id);
             var client = GetClient();
             var req_context = GetRequestContext();
-
             var menu_id = GetPlaceCurrentMenuId(client, place_id_int, null);
             var placeMenu1 = new Menu1() { Id = menu_id };
-
+            logger.Debug("Starting GetCategoriesForMenu");
             ProductCategory[] menu = client.GetCategoriesForMenu(placeMenu1, req_context);
-
+            logger.Debug("GetCatagoriesForMenu complete");
             foreach (var cat in client.GetCategoriesForMenu(placeMenu1, req_context))
             {
                 if (cat.Name.ToLower().Contains("chicken"))
                 {
+                    logger.Debug("Starting GetProducts");
                     // We have a winner. Take the ID and fetch the actual menu
                     var realMenu = client.GetProducts(placeMenu1, new ProductCategory1() { Id = cat.Id }, req_context);
+                    logger.Debug("GetProducts complete");
                     List<ChickenMenu> returner = new List<ChickenMenu>();
 
                     foreach (Product prod in realMenu)
