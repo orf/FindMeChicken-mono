@@ -1,5 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel;
+using System.Collections;
 using System.Linq;
 using System.Text;
 
@@ -26,31 +28,49 @@ namespace FindMeChicken_POCO
         public string Description { get; set; }
     }
 
+    public class Rating
+    {
+        public int Score { get; set; } // 0 to 100
+        public int RatingsCount { get; set; }
+
+        public static implicit operator Rating(string input)
+        {
+            return new Rating()
+            {
+                Score = Convert.ToInt32(input.Split(',')[0]),
+                RatingsCount = Convert.ToInt32(input.Split(',')[1])
+            };
+        }
+
+        public override string ToString()
+        {
+            return string.Format("{0}% positive ({1} reviews)", this.Score, this.RatingsCount);
+        }
+    }
+
     public class ChickenPlace
     {
-
         public string Id { get; set; }
         public string Source { get; set; }
 
         public string Name { get; set; }
         public string Address { get; set; }
         public string TelephoneNumber { get; set; }
-        public DateTime? OpenUntil { get; set; }
+        //public DateTime? OpenUntil { get; set; }
         public bool MenuAvaiable { get; set; }
         public Location Location { get; set; }
         public double Distance { get; set; }
         public bool HasChicken { get; set; }
 
         // Rating from 1 to 100
-        public double Rating { get; set; }
-
+        public Rating Rating { get; set; }
     }
 
     public class ChickenSearchRequestResponse
     {
         public List<ChickenPlace> Result { get; set; }
         public string PostCode { get; set; }
-        public TimeSpan TimeTaken { get; set; }
+        public string TimeTaken { get; set; }
     }
 
     public class ChickenMenuRequest

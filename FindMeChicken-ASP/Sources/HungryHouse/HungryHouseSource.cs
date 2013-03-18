@@ -161,8 +161,29 @@ namespace FindMeChicken_ASP.Sources.HungryHouse
                     var rating_node = place_node.SelectSingleNode(".//div[@class='restsRating']/div");
                     if (rating_node != null)
                     {
-                        string rating_style = rating_node.Attributes["style"].Value;
-                        place.Rating = Convert.ToDouble(rating_style.Split(':')[1].Replace("%", string.Empty));
+                        Rating place_rating = new Rating();
+                        string rating_text = rating_node.InnerText;
+                        // Text is like so: "Average rating: X of Y"
+                        try
+                        {
+                            string x_of_y = rating_text.Split(':')[1].Trim();
+                            int thescore = Convert.ToInt32(x_of_y.Split(' ')[0]);
+                            int max = Convert.ToInt32(x_of_y.Split(' ')[2]);
+                            place_rating.Score = NumberScale.ScaleNumber(thescore, 0, 50, 100, 0);
+                        }
+                        catch (Exception ex)
+                        {
+                            logger.Error("Could not parse rating_node", ex);
+                        }
+
+                        // Get the total number of reviewers
+                        var review_count_node = place_node.SelectSingleNode(".//a[@rel='restsReviewsTab']");
+                        if (review_count_node != null)
+                        {
+                            place_rating.RatingsCount = Convert.ToInt32(review_count_node.InnerText.Split(' ')[0]);
+                        }
+
+                        if (place_rating.Score != 0) place.Rating = place_rating;
                     }
 
                     // The search page on HungryHouse is a bit shit so I'm not sure if it returns closed places or not.

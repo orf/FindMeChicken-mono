@@ -176,7 +176,7 @@ namespace FindMeChicken_ASP.Sources.JustEat
                 // Get the rating. Its a bit of a hack, but w/e
                 var rating_node = place_details.SelectSingleNode("./p[contains(@class,'rating')]");
                 // The rating itself is in the class.
-                place.Rating = NumberScale.ScaleNumber(Convert.ToInt32(rating_node.Attributes["class"].Value.Split('-')[1]), 0, 60, 100, 0);
+                //place.Rating = NumberScale.ScaleNumber(Convert.ToInt32(rating_node.Attributes["class"].Value.Split('-')[1]), 0, 60, 100, 0);
 
                 if (!DB.DoesChickenPlaceNotHaveChicken(place))
                 {

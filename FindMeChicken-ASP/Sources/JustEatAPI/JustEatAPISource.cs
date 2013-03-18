@@ -85,7 +85,7 @@ namespace FindMeChicken_ASP.Sources.JustEatAPI
                                         MenuAvaiable = true,
                                         Location = null, // Will be filled in later.
                                         HasChicken = true,
-                                        Rating = NumberScale.ScaleNumber(Convert.ToInt32(place.RatingForDisplay),0,6,0,100),
+                                        Rating = new Rating() { RatingsCount=place.NumberOfRatings, Score=NumberScale.ScaleNumber(place.RatingForDisplay, 0, 6, 100, 0) },
                                         TelephoneNumber = null
                                     };
             returner.AddRange(places);

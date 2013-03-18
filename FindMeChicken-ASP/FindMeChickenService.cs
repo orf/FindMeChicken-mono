@@ -122,7 +122,7 @@ namespace FindMeChicken_ASP
             timer.Stop();
             logger.Debug(string.Format("Took {0} to fetch places", timer.Elapsed.ToString()));
 
-            return new ChickenSearchRequestResponse() { Result = ordered, PostCode=PostCode, TimeTaken=timer.Elapsed };
+            return new ChickenSearchRequestResponse() { Result = ordered, PostCode=PostCode, TimeTaken=timer.Elapsed.Seconds.ToString() };
         }
     }
 }

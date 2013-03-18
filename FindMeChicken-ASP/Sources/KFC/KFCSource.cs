@@ -66,10 +66,9 @@ namespace FindMeChicken_ASP.Sources.KFC
                     {
                         Id = entry.id.Value.ToString(),
                         Source = SOURCE_NAME,
-                        Name = CultureInfo.CurrentCulture.TextInfo.ToTitleCase(entry.storeName.Value.ToLower()),
+                        Name = "KFC:" + CultureInfo.CurrentCulture.TextInfo.ToTitleCase(entry.storeName.Value.ToLower()),
                         Address = Addresses,
                         TelephoneNumber = entry.telno,
-                        OpenUntil = null,
                         MenuAvaiable = false,
                         Location = new Location() { Lat = entry.latitude, Long = entry.longitude },
                     };
